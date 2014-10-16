@@ -1,0 +1,19 @@
+{
+  "name": "crud-mongoose",
+  "version": "0.0.0",
+  "description": "crud middleware specifically for mongoose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:uhray/crud-mongoose.git"
+  },
+  "author": "Bobby Thompson <bobby@uhray.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uhray/crud-mongoose/issues"
+  },
+  "homepage": "https://github.com/uhray/crud-mongoose"
+}
