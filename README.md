@@ -47,7 +47,7 @@ With this example, you can do simple GET, POST, PUT, and DELETE routes to:
   * Delete many users - `DELETE` on `/api/users`
   * Read one user - `GET` on `/api/users/<id>`
   * Update one user - `PUT` on `/api/users/<id>`
-  * Delete one user - `PUT` on `/api/users/<id>`
+  * Delete one user - `DELETE` on `/api/users/<id>`
 
 There are also a number of default query-able parameters. For example, the following GET requests could be used to get different subsets of data:
 
@@ -65,8 +65,9 @@ There are other queries you can make, but this gives a pretty good example of wh
 
 The API has two types of middleware functions: 
 
-  * Middleware that modify the crud *data* and *query* objects - [here](#modify-middleware).
-  * Middleware that interact directly with the MongoDB through mongoose - [here](#mongoose-middleware).
+  * Middleware that interacts directly with the MongoDB through mongoose - [here](#mongoose-middleware).
+  * Middleware that modifies the crud *data* and *query* objects - [here](#modify-middleware).
+ 
 
 All middleware can be placed into a [Crud Pipe](https://github.com/uhray/crud#method-pipe), like this:
 
@@ -90,7 +91,7 @@ function(data, query, callback) {
 }
 ```
 
-Example, allowing you to post on `/api/users` to create a new user:
+Example, allowing you to `POST` on `/api/users` to create a new user:
 
 ```js
 crud.entity('/users').Create()
@@ -99,7 +100,7 @@ crud.entity('/users').Create()
 
 <a href="#findAll" name="findAll">#</a> cm.**findAll**(*Model*, [*fields*])
 
-This method does a `find` on the *Model* using the query object. The *fields* parameter is an optional array of fields you what to allow in the response. So, if you only want to allow certain fields you can provide an array like `[ 'firstName', 'lastName' ]`.
+This method does a `find` on the *Model* using the *query* object. The *fields* parameter is an optional array of fields you what to allow in the response. So, if you only want to allow certain fields you can provide an array like `[ 'firstName', 'lastName' ]`.
 
 For starters, you can think of it as something like this:
 
@@ -115,10 +116,10 @@ That's where it started, but then we added a lot more functionality. There are s
   * *skip* - skips this many records on the response
   * *page* - used for pagination. Indexed starting at zero.
   * *perPage* - number of records per page. Pagination doesn't work well without a value here.
-  * *sortBy* - sortable values. This is is formatted like this: `firstvalue:asc,secondvalue:desc`, where the comma denotes different fields and the colon is used to show `asc` for ascending or `desc` for descending. Default is ascending.
+  * *sortBy* - sortable values. This is formatted like this: `firstvalue:asc,secondvalue:desc`, where the comma denotes different fields and the colon is used to show `asc` for ascending or `desc` for descending. Default is ascending.
   * *fields* - a comma separated listed of fields to select.
 
-An example, allowing you to query all users:
+An example, allowing you to query all users with a `GET` on `/api/users`:
 
 ```js
 crud.entity('/users').Read()
@@ -143,7 +144,7 @@ That's where it started, but then we added a lot more functionality. There are s
 
   * *fields* - a comma separated listed of fields to select.
 
-An example, allowing you to query one user:
+An example, allowing you to query one user with `GET` on `/api/users/<id>`:
 
 ```js
 crud.entity('/users/:_id').Read()
@@ -163,7 +164,7 @@ function(data, query, callback) {
 }
 ```
 
-An example so you can remove all users:
+An example so you can remove all users with a `DELETE` on `/api/users`:
 
 ```js
 crud.entity('/users').Delete()
@@ -180,7 +181,7 @@ function(data, query, callback) {
 }
 ```
 
-An example so you can remove one user:
+An example so you can remove one user with a `DELETE` on `/api/users/<id>`:
 
 ```js
 crud.entity('/users/:_id').Delete()
@@ -197,7 +198,7 @@ function(data, query, callback) {
 }
 ```
 
-An example so you can update a user:
+An example so you can update a user with a `PUT` on `/api/users/<id>`:
 
 ```js
 crud.entity('/users/:_id').Update()
