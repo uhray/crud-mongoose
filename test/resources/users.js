@@ -17,7 +17,9 @@ Schema = exports.Schema = new mongoose.Schema({
   info: {
     gender: String,
     age: Number
-  }
+  },
+  created: { type: Date, default: Date.now },
+  updated: { type: Date, default: Date.now }
 });
 
 Model = exports.Model = mongoose.model('users', Schema);
@@ -25,16 +27,18 @@ Model = exports.Model = mongoose.model('users', Schema);
 // All Users -------------------------------------------------------------------
 
 crud.entity('/users').Read()
-  .pipe(cm.filterQuery('info.age'))
-  .pipe(function(data, query, cb) {
-    Model.find(query).lean().exec(cb);
-  })
+  .pipe(cm.parseQuery()
+          .removes('info.age', 'auth')        // can't query by age or auth
+          .overrides({ active: true })        // can only query active people
+          .defaults({ 'info.gender': 'M' })   // default only males
+          .maxes({ limit: 8 }))               // max limit is 100
+  .pipe(cm.findAll(Model, [ 'firstName', 'lastName', 'info' ]))
 
 crud.entity('/users').Create()
-  .pipe(cm.filterData('info.age'))
-  .pipe(function(data, query, cb) {
-    cb();
-  })
+  .pipe(cm.createNew(Model));
+
+crud.entity('/users').Delete()
+    .pipe(cm.removeAll(Model));
 
 crud.entity('/users').on('error', function(method, e) {
   console.log('%s error: %j', method, e);
@@ -43,10 +47,17 @@ crud.entity('/users').on('error', function(method, e) {
 // One User --------------------------------------------------------------------
 
 crud.entity('/users/:_id').Read()
-    .pipe(function(data, query, cb) {
-      cb(null, 'one user');
-      //Model.findOne(query).lean().exec(cb);
-    });
+  .pipe(cm.findOne(Model, [ 'firstName', 'lastName', 'info' ]))
+
+crud.entity('/users/:_id').Update()
+  .pipe(cm.parseData()
+          .removes('auth')                   // can't set auth data
+          .overrides({ updated: Date.now })  // override updated date
+          .defaults({ 'info.gender': 'M' }))  // default only males
+  .pipe(cm.updateOne(Model));
+
+crud.entity('/users/:_id').Delete()
+  .pipe(cm.removeOne(Model));
 
 crud.entity('/users/:_id').on('error', function(method, e) {
   debug('one | %s error: %j', method, e);
