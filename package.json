@@ -17,12 +17,14 @@
   },
   "homepage": "https://github.com/uhray/crud-mongoose",
   "dependencies": {
-    "require-dir": "^0.1.0"
+    "require-dir": "^0.1.0",
+    "debug": "^2.1.0",
+    "gets": "^1.0.0"
   },
   "devDependencies": {
     "mongoose": "^3.8.17",
-    "crud": "0.0.28",
     "express": "^4.9.7",
-    "body-parser": "^1.9.0"
+    "body-parser": "^1.9.0",
+    "node-crud": "^2.0.1"
   }
 }
