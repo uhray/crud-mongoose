@@ -140,7 +140,7 @@ function (data, query, callback) {
 }
 ```
 
-That's where it started, but then we added a lot more functionality. There are special *query* parameters that are parsed here: (well, there is only one right now).
+That's where it started, but then we added more functionality. There are special *query* parameters that are parsed here: (well, there is only one right now).
 
   * *fields* - a comma separated listed of fields to select.
 
@@ -188,6 +188,8 @@ crud.entity('/users/:_id').Delete()
     .pipe(cm.removeOne(Model));
 ```
 
+Note: It's important for the URL to be formatted like `/users/:_id`, because then the query will have `{ _id: <id_in_url> }`, which is needed to find the individual user.
+
 <a href="#updateOne" name="updateOne">#</a> cm.**updateOne**(*Model*)
 
 This method does a `findOneAndUpdate` on the *Model* using the *query* object for querying and the *data* object for the update. The middleware is basically this:
@@ -205,6 +207,7 @@ crud.entity('/users/:_id').Update()
     .pipe(cm.updateOne(Model));
 ```
 
+Note: It's important for the URL to be formatted like `/users/:_id`, because then the query will have `{ _id: <id_in_url> }`, which is needed to find the individual user.
 
 #### Modify Middleware
 
