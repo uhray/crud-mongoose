@@ -149,7 +149,7 @@ An example, allowing you to query one user with `GET` on `/api/users/<id>`:
 
 ```js
 crud.entity('/users/:_id').Read()
-  .pipe(cm.findAll(Model, [ 'firstName', 'lastName' ]))
+  .pipe(cm.findOne(Model, [ 'firstName', 'lastName' ]))
 
 ```
 
