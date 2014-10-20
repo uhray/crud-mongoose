@@ -37,7 +37,6 @@ crud.entity('/users/:_id').Update()
 
 crud.entity('/users/:_id').Delete()
   .pipe(cm.removeOne(Model));
-
 ```
 
 With this example, you can do simple GET, POST, PUT, and DELETE routes to:
