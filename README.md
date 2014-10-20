@@ -14,7 +14,7 @@ var crud = require('crud'),
       lastName:  { type: String, required: true },
       gender:    { type: String, required: true, enum: ['M', 'F'] },
       created:   { type: Date, default: Date.now }
-    }));
+  }));
 
 // All Users -------------------------------------------------------------------
 
