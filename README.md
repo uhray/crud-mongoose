@@ -100,13 +100,14 @@ crud.entity('/users').Create()
 
 <a href="#findAll" name="findAll">#</a> cm.**findAll**(*Model*, [*fields*])
 
-This method does a `find` on the *Model* using the *query* object. The *fields* parameter is an optional array of fields you what to allow in the response. So, if you only want to show certain fields you can provide an array like `['firstName', 'lastName']`. Or, if you wish to restrict a field ALWAYS, you can put a `-` before it (e.g. `['firstname', 'lastname', '-password']` will by default only show first and last names, but will not allow you to ever query for the password fields.
+This method does a `find` on the *Model* using the *query* object. The *fields* parameter is an optional array of fields you want to allow in the response. So, if you only want to show certain fields you can provide an array like `['firstName', 'lastName']`. Or, if you wish to restrict a field ALWAYS, you can put a `-` before it (e.g. `['firstname', 'lastname', '-password']` will by default only show first and last names, but will not allow you to ever query for the password fields).
 
 For starters, you can think of it as something like this:
 
 ```js
 function (data, query, callback) {
   Model.find(query).select(fields.join(' ')).lean().exec(callback);
+  // see here: http://mongoosejs.com/docs/api.html#query_Query-select for mongoose select
 }
 ```
 
@@ -129,7 +130,7 @@ crud.entity('/users').Read()
 
 <a href="#findOne" name="findOne">#</a> cm.**findOne**(*Model*, [*fields*])
 
-This method does a `findOne` on the *Model* using the query object. The *fields* parameter is an optional array of fields you what to allow in the response. So, if you only want to show certain fields you can provide an array like `['firstName', 'lastName']`. Or, if you wish to restrict a field ALWAYS, you can put a `-` before it (e.g. `['firstname', 'lastname', '-password']` will by default only show first and last names, but will not allow you to ever query for the password fields.
+This method does a `findOne` on the *Model* using the query object. The *fields* parameter is an optional array of fields you want to allow in the response. So, if you only want to show certain fields you can provide an array like `['firstName', 'lastName']`. Or, if you wish to restrict a field ALWAYS, you can put a `-` before it (e.g. `['firstname', 'lastname', '-password']` will by default only show first and last names, but will not allow you to ever query for the password fields).
 
 For starters, you can think of it as something like this:
 
@@ -137,6 +138,7 @@ For starters, you can think of it as something like this:
 function (data, query, callback) {
   Model.findOne(query).select(fields.join(' '))
        .lean().exec(callback);
+  // see here: http://mongoosejs.com/docs/api.html#query_Query-select for mongoose select
 }
 ```
 
