@@ -100,7 +100,7 @@ crud.entity('/users').Create()
 
 <a href="#findAll" name="findAll">#</a> cm.**findAll**(*Model*, [*fields*])
 
-This method does a `find` on the *Model* using the *query* object. The *fields* parameter is an optional array of fields you what to allow in the response. So, if you only want to allow certain fields you can provide an array like `[ 'firstName', 'lastName' ]`.
+This method does a `find` on the *Model* using the *query* object. The *fields* parameter is an optional array of fields you what to allow in the response. So, if you only want to show certain fields you can provide an array like `['firstName', 'lastName']`. Or, if you wish to restrict a field ALWAYS, you can put a `-` before it (e.g. `['firstname', 'lastname', '-password']` will by default only show first and last names, but will not allow you to ever query for the password fields.
 
 For starters, you can think of it as something like this:
 
@@ -129,7 +129,7 @@ crud.entity('/users').Read()
 
 <a href="#findOne" name="findOne">#</a> cm.**findOne**(*Model*, [*fields*])
 
-This method does a `findOne` on the *Model* using the query object. The *fields* parameter is an optional array of fields you what to allow in the response. So, if you only want to allow certain fields you can provide an array like `[ 'firstName', 'lastName' ]`.
+This method does a `findOne` on the *Model* using the query object. The *fields* parameter is an optional array of fields you what to allow in the response. So, if you only want to show certain fields you can provide an array like `['firstName', 'lastName']`. Or, if you wish to restrict a field ALWAYS, you can put a `-` before it (e.g. `['firstname', 'lastname', '-password']` will by default only show first and last names, but will not allow you to ever query for the password fields.
 
 For starters, you can think of it as something like this:
 

@@ -20,7 +20,8 @@ Schema = exports.Schema = new mongoose.Schema({
   },
   active: { type: Boolean, default: true },
   created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now }
+  updated: { type: Date, default: Date.now },
+  turnkey: { type: String }
 });
 
 Model = exports.Model = mongoose.model('users', Schema);
@@ -33,7 +34,7 @@ crud.entity('/users').Read()
           .overrides({ active: true })        // can only query active people
           .defaults({ 'info.gender': 'M' })   // default only males
           .maxes({ limit: 8 }))               // max limit is 100
-  .pipe(cm.findAll(Model, [ 'firstName', 'lastName', 'info' ]))
+  .pipe(cm.findAll(Model, [ 'firstName', '-turnkey' ]))
 
 crud.entity('/users').Create()
   .pipe(cm.createNew(Model));
@@ -48,7 +49,7 @@ crud.entity('/users').on('error', function(method, e) {
 // One User --------------------------------------------------------------------
 
 crud.entity('/users/:_id').Read()
-  .pipe(cm.findOne(Model, [ 'firstName', 'lastName', 'info' ]))
+  .pipe(cm.findOne(Model, [ 'firstName', 'lastName', 'info', '-turnkey' ]))
 
 crud.entity('/users/:_id').Update()
   .pipe(cm.parseData()
