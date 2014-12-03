@@ -251,7 +251,7 @@ The chainable properties are the SAME as those from [parseQuery](#parseQuery), e
   * They modify the *data* object (not the *query* object)
   * There is no *maxes* method, because that is made specifically to handle the query limits, pages, etc.
 
-> Note, if you remove the ability to send certain data, like `parseData().removes('info')`, this does not mean the user cannot updated pass something like `{ 'info.age' : 7 }`, which does update mongoose documents because everything is treated as flat in mongoose. So you would need to explicitly remove all things like: `parseData().removes('info.age', 'info.gender')`.
+> Note, if you remove the ability to send certain data, like `parseData().removes('info')`, this does not mean the user cannot updated pass something like `{ 'info.age' : 7 }`, which does update mongoose documents because everything is treated as flat in mongoose. Likewise, if you have an array such as `{ favcolors: ['red', 'blue', 'green'] }`, you could pass `{ 'favcolors.0' : 'black' }`. Because of this, if key in the data object has a period (meaning it's already been flattened somewhat), parseData will remove this key-value from the resultant data object. This is solely for security reasons.
 
 ## Debug
 
