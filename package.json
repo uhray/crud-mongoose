@@ -1,6 +1,6 @@
 {
   "name": "crud-mongoose",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "crud middleware specifically for mongoose",
   "main": "index.js",
   "scripts": {
