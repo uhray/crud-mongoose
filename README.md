@@ -193,13 +193,18 @@ Note: It's important for the URL to be formatted like `/users/:_id`, because the
 
 <a href="#updateOne" name="updateOne">#</a> cm.**updateOne**(*Model*)
 
-This method does a `findOneAndUpdate` on the *Model* using the *query* object for querying and the *data* object for the update. The middleware is basically this:
+This method does a `findOne` and then and `update` on the *Model* using the *query* object for querying and the *data* object for the update. The middleware is basically this:
 
 ```js
 function(data, query, callback) {
-  Model.findOneAndUpdate(query, data).lean().callback();
+  Model.findOne(query, function(e, d) {
+    merge(d, data);
+    d.save(callback);
+  });
 }
 ```
+
+We used to use `findOneAndUpdate`, but decided to do a `find` then update because updates do not use mongoose validators.
 
 An example so you can update a user with a `PUT` on `/api/users/<id>`:
 
