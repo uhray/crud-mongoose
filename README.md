@@ -191,7 +191,7 @@ crud.entity('/users/:_id').Delete()
 
 Note: It's important for the URL to be formatted like `/users/:_id`, because then the query will have `{ _id: <id_in_url> }`, which is needed to find the individual user.
 
-<a href="#updateOne" name="updateOne">#</a> cm.**updateOne**(*Model*)
+<a href="#updateOne" name="updateOne">#</a> cm.**updateOne**(*Model*, *Options*)
 
 This method does a `findOne` and then and `update` on the *Model* using the *query* object for querying and the *data* object for the update. The middleware is basically this:
 
@@ -204,9 +204,11 @@ function(data, query, callback) {
 }
 ```
 
-We used to use `findOneAndUpdate`, but decided to do a `find` then update because updates do not use mongoose validators.
+*Options*
 
-An example so you can update a user with a `PUT` on `/api/users/<id>`:
+  - `findOneAndUpdate` (Default=`false`) - We used to use `findOneAndUpdate`, but decided to do a `find` then update because updates do not use mongoose validators. Unfortunately, this does not allow you to apply MongoDB updates like $push, $pull, etc. So, if you need to use other update methods, you can set this to true. Just remember this will not obey the Mongoose validation.
+
+*Example* - An example so you can update a user with a `PUT` on `/api/users/<id>`:
 
 ```js
 crud.entity('/users/:_id').Update()
