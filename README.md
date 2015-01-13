@@ -198,7 +198,7 @@ This method does a `findOne` and then and `update` on the *Model* using the *que
 ```js
 function(data, query, callback) {
   Model.findOne(query, function(e, d) {
-    merge(d, data);
+    d.set(data);
     d.save(callback);
   });
 }
@@ -206,7 +206,7 @@ function(data, query, callback) {
 
 *Options*
 
-  - `findOneAndUpdate` (Default=`false`) - We used to use `findOneAndUpdate`, but decided to do a `find` then update because updates do not use mongoose validators. Unfortunately, this does not allow you to apply MongoDB updates like $push, $pull, etc. So, if you need to use other update methods, you can set this to true. Just remember this will not obey the Mongoose validation.
+  - `findOneAndUpdate` (Default=`false`) - We used to use `findOneAndUpdate`, but decided to do a `find` then update because updates do not use mongoose validators. Unfortunately, this does not allow you to apply MongoDB updates like $push, $pull, etc. So, if you need to use other update methods, you can set this to true. Just remember this will not obey the Mongoose validation. Additionally, you may need this if you're trying to update a Mixed mongoose object because Mixed objects cannot be updated with the `object.set` function.
 
 *Example* - An example so you can update a user with a `PUT` on `/api/users/<id>`:
 
