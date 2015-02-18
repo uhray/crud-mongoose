@@ -127,6 +127,10 @@ crud.entity('/users').Read()
 
 ```
 
+The following are the chainable properties:
+
+  * findAll(Model).**stream**() - sets the mode to streaming. This will not pass things through the crud chain anymore and instead stream responses. This is useful for queries that expect huge responses.
+
 <a href="#findOne" name="findOne">#</a> cm.**findOne**(*Model*, [*fields*])
 
 This method does a `findOne` on the *Model* using the query object. The *fields* parameter is an optional array of fields you want to allow in the response. So, if you only want to show certain fields you can provide an array like `['firstName', 'lastName']`. Or, if you wish to restrict a field ALWAYS, you can put a `-` before it (e.g. `['firstname', 'lastname', '-password']` will by default only show first and last names, but will not allow you to ever query for the password fields).
