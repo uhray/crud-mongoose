@@ -34,7 +34,8 @@ crud.entity('/users').Read()
           //.overrides({ active: true })        // can only query active people
           .defaults({ 'info.gender': 'M' })   // default only males
           .maxes({ limit: 8 }))               // max limit is 100
-  .pipe(cm.findAll(Model, ['-turnkey']).stream())
+  .pipe(cm.findAll(Model, ['-turnkey']).stream()
+          .exports({ csv: cm.exporters.csv() }))
 
 crud.entity('/users').Create()
   .pipe(cm.createNew(Model));

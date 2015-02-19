@@ -130,6 +130,7 @@ crud.entity('/users').Read()
 The following are the chainable properties:
 
   * findAll(Model).**stream**() - sets the mode to streaming. This will not pass things through the crud chain anymore and instead stream responses. This is useful for queries that expect huge responses.
+  * findAll(Model).**exports**(*object*) - turns on exporting capabilities. This allows you to set export functionality so, for example, query `?export=csv` will export the data as a csv file. The *object* parameter specifies keys as the export keys like `'csv'` and the values are functions that handle the exporting. An example would be `findAll(Model).exports({ csv: cm.exporters.csv() })`. See [exporter functions](exporter-functions) for information on how they are defined and the pre-packaged functions in crud-mongoose.
 
 <a href="#findOne" name="findOne">#</a> cm.**findOne**(*Model*, [*fields*])
 
@@ -263,6 +264,29 @@ The chainable properties are the SAME as those from [parseQuery](#parseQuery), e
   * There is no *maxes* method, because that is made specifically to handle the query limits, pages, etc.
 
 > Note, if you remove the ability to send certain data, like `parseData().removes('info')`, this does not mean the user cannot updated pass something like `{ 'info.age' : 7 }`, which does update mongoose documents because everything is treated as flat in mongoose. Likewise, if you have an array such as `{ favcolors: ['red', 'blue', 'green'] }`, you could pass `{ 'favcolors.0' : 'black' }`. Because of this, if key in the data object has a period (meaning it's already been flattened somewhat), parseData will remove this key-value from the resultant data object. This is solely for security reasons.
+
+## Exporter Functions
+
+Exporter functions are used to export the api data into something other than JSON, say CSV for example.
+
+The are passed three arguments:
+
+  * response - express response object.
+  * cursor - The mongoose cursor with the rest of the query parameters set
+  * callback - callback to be called when done. The first argument should be the error message if there is one or null.
+
+Prepackaged in crud-mongoose are the folloowing exporters, which can be accessed by `cm.exporters`. If you're using the csv exporter you could do the following:
+
+```js
+crud.entity('/users').Read()
+  .pipe(cm.findAll(Model)
+          .exports({ csv: cm.exporters.csv() })
+
+```
+
+<a href="#exporters-csv" name="exporters-csv">#</a> cm.exporters.**csv**([*headers*])
+
+Exports the resulting query as a csv file. The optional *headers* argument allows you to specify an array of csv headers, which will be the first line and will be used as the accessors for the data values for each row. If not provided, the key's on the first row will be used.
 
 ## Debug
 
