@@ -288,6 +288,10 @@ crud.entity('/users').Read()
 
 Exports the resulting query as a csv file. The optional *headers* argument allows you to specify an array of csv headers, which will be the first line and will be used as the accessors for the data values for each row. If not provided, the key's on the first row will be used.
 
+<a href="#exporters-xlsx" name="exporters-xlsx">#</a> cm.exporters.**xlsx**([*headers*])
+
+Exports the resulting query as a xlsx file. The optional *headers* argument allows you to specify an array of xlsx headers, which will be the first line and will be used as the accessors for the data values for each row. If not provided, the key's on the first row will be used.
+
 ## Debug
 
 The Crud module has sprinkled some [debug](https://github.com/visionmedia/debug) messages throughout the module. If you wish to turn these on, run your sever with the environment variable `DEBUG=crud-mongoose*` set. Or, you can turn them on for only one method, like `DEBUG=crud-mongoose:findOne`.

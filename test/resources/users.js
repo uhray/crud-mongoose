@@ -32,7 +32,7 @@ crud.entity('/users').Read()
   .pipe(cm.parseQuery()
           .removes('info.age', 'auth')        // can't query by age or auth
           //.overrides({ active: true })        // can only query active people
-          .defaults({ 'info.gender': 'M' })   // default only males
+          //.defaults({ 'info.gender': 'M' })   // default only males
           .maxes({ limit: 8 }))               // max limit is 100
   .pipe(cm.findAll(Model, ['-turnkey']).stream()
           .exports({ csv: cm.exporters.csv() }))
