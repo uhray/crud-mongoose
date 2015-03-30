@@ -243,6 +243,8 @@ The following are the chainable properties:
 
   * parseQuery().**removes**(*key1*, [*key2*, *key3* ... ]) - the *keys*, passed as individual arguments, are keys that will be removed from the query so API users cannot query by this field. For example, if you have `.removes('age')`, then you cannot query like this: `/api/users?age=23`, because age will be removed from the query.
 
+  * parseData().**required**(*key1*, [*key2*, *key3* ... ]) - the *keys*, passed as individual arguments, are keys indicate fields that need to be present on the  query object. An empty string does not count as "present".
+
   * parseQuery().**overrides**(*overrides*) - *overrides* is a key-value object that will force its key-value parameters on the *query* object. For example, if you have `{ active: true }` as the *overrides*, then if you were to query `/api/users?active=false` it would be equivalent to `/api/users?active=true`. You could use this to prevent API users from querying inactive records. Also, if any values in the key-values are functions, then they will be called when set on the query.
 
   * parseQuery().**maxes**(*maxes*) - *maxes*  is a key-value object that will force any key-value parameters on the *query* object that are in the *maxes* object to be no-more-than the max. For example, if you have `{ limit: 100 }` as the *maxes*, then if you were to query `/api/users?limit=1000`, it would override the `limit` parameter to be `100`, since that is the max.
@@ -258,10 +260,11 @@ crud('/users/:_id').Update()
   .pipe(cm.findAll())
 ```
 
-The chainable properties are the SAME as those from [parseQuery](#parseQuery), except two important things:
+The chainable properties are the SAME as those from [parseQuery](#parseQuery), except three important things:
 
   * They modify the *data* object (not the *query* object)
   * There is no *maxes* method, because that is made specifically to handle the query limits, pages, etc.
+  * On `required`, anything that is not truthy AND is not the boolean `false` is not considered present. This allows you to pass `false` to a required field, but not `null` or `''`.
 
 > Note, if you remove the ability to send certain data, like `parseData().removes('info')`, this does not mean the user cannot updated pass something like `{ 'info.age' : 7 }`, which does update mongoose documents because everything is treated as flat in mongoose. Likewise, if you have an array such as `{ favcolors: ['red', 'blue', 'green'] }`, you could pass `{ 'favcolors.0' : 'black' }`. Because of this, if key in the data object has a period (meaning it's already been flattened somewhat), parseData will remove this key-value from the resultant data object. This is solely for security reasons.
 
