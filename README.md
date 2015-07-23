@@ -131,6 +131,7 @@ The following are the chainable properties:
 
   * findAll(Model).**stream**() - sets the mode to streaming. This will not pass things through the crud chain anymore and instead stream responses. This is useful for queries that expect huge responses.
   * findAll(Model).**exports**(*object*) - turns on exporting capabilities. This allows you to set export functionality so, for example, query `?export=csv` will export the data as a csv file. The *object* parameter specifies keys as the export keys like `'csv'` and the values are functions that handle the exporting. An example would be `findAll(Model).exports({ csv: cm.exporters.csv() })`. See [exporter functions](#exporter-functions) for information on how they are defined and the pre-packaged functions in crud-mongoose.
+  * findAll(Model).**metadata**(allow) - *allow* is boolean deciding whether or not to send metadata with responses. The default is `false`. Metadata will only be sent when a query has set `page` and `perPage`, because it's not useful otherwise.
 
 <a href="#findOne" name="findOne">#</a> cm.**findOne**(*Model*, [*fields*])
 
