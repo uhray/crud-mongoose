@@ -1,6 +1,6 @@
 {
   "name": "crud-mongoose",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "crud middleware specifically for mongoose",
   "main": "index.js",
   "scripts": {
@@ -17,13 +17,13 @@
   },
   "homepage": "https://github.com/uhray/crud-mongoose",
   "dependencies": {
-    "require-dir": "^0.1.0",
     "debug": "^2.1.0",
     "gets": "^1.0.0",
+    "mongoose": "^4.1.7",
+    "require-dir": "^0.1.0",
     "xlsx-stream": "^0.1.2"
   },
   "devDependencies": {
-    "mongoose": "^3.8.17",
     "express": "^4.9.7",
     "body-parser": "^1.9.0",
     "node-crud": "^2.0.1"
