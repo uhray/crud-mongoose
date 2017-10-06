@@ -133,6 +133,45 @@ The following are the chainable properties:
   * findAll(Model).**exports**(*object*) - turns on exporting capabilities. This allows you to set export functionality so, for example, query `?export=csv` will export the data as a csv file. The *object* parameter specifies keys as the export keys like `'csv'` and the values are functions that handle the exporting. An example would be `findAll(Model).exports({ csv: cm.exporters.csv() })`. See [exporter functions](#exporter-functions) for information on how they are defined and the pre-packaged functions in crud-mongoose.
   * findAll(Model).**metadata**(allow) - *allow* is boolean deciding whether or not to send metadata with responses. The default is `false`. Metadata will only be sent when a query has set `page` and `perPage`, because it's not useful otherwise.
 
+<a href="#findAggregation" name="findAggregation">#</a> cm.**findAggregation**(*Model*, [*fields*])
+
+This method does an `aggregate` one the *Model* using the *query* object as a `$match` pipeline.
+
+Everything operates the same as [findAll](#findAll), with these changes:
+
+**Removed Functionality from findAll**:
+
+  * Export: no exporting functionality
+  * Metadata: no metadata functionality
+
+**Adding Functionality from findAll**:
+
+  * findAggregation(Model).**additionalStages**(*stages*) - adds additional pipeline stages to the aggregation. This runs after the projection and before the sort/limit/skip functionality. The argument *stages* is an array.
+  * findAggregation(Model).**sortPresets**(*presets*) - This allows you to add new fields for sorting. For example, you can add a new field that is the sum of two fields. *presets* is a key-value lookup that will be added to the [$project](https://docs.mongodb.com/manual/reference/operator/aggregation/project/) stage. These values will not be added unless the sort key is used in the `sortBy` query parameter to prevent additional work that's unnecessary.
+
+Example:
+
+    ```js
+    .pipe(cm.findAggregation(Model).additionalStages([
+      { $lookup: {
+          from: 'users',
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user'
+      } }
+    ]).sortPresets({
+      totalLeads: { $sum: [
+        '$applicationStats.facebook.qualified',
+        '$applicationStats.facebook.unqualified',
+        '$applicationStats.jobBoard.qualified',
+        '$applicationStats.jobBoard.unqualified',
+        '$applicationStats.embedded.qualified',
+        '$applicationStats.embedded.unqualified'
+      ] }
+    }))
+    ```
+
+
 <a href="#findOne" name="findOne">#</a> cm.**findOne**(*Model*, [*fields*])
 
 This method does a `findOne` on the *Model* using the query object. The *fields* parameter is an optional array of fields you want to allow in the response. So, if you only want to show certain fields you can provide an array like `['firstName', 'lastName']`. Or, if you wish to restrict a field ALWAYS, you can put a `-` before it (e.g. `['firstname', 'lastname', '-password']` will by default only show first and last names, but will not allow you to ever query for the password fields).
