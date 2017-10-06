@@ -137,6 +137,8 @@ The following are the chainable properties:
 
 This method does an `aggregate` one the *Model* using the *query* object as a `$match` pipeline.
 
+> NOTE: This feature is in beta. We haven't had a ton of time to test, but needed it for some work.
+
 Everything operates the same as [findAll](#findAll), with these changes:
 
 **Removed Functionality from findAll**:
