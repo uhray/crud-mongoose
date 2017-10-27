@@ -1,6 +1,6 @@
 {
   "name": "crud-mongoose",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "crud middleware specifically for mongoose",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "gets": "^1.0.0",
     "lodash": "^4.17.4",
     "mongoose": "^4.1.7",
-    "require-dir": "^0.1.0",
+    "require-dir": "^0.3.2",
     "xlsx-stream": "^0.1.2"
   },
   "devDependencies": {
