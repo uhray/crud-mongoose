@@ -154,7 +154,7 @@ Everything operates the same as [findAll](#findAll), with these changes:
 Example:
 
     ```js
-    .pipe(cm.findAggregation(Model).additionalStages([
+    .pipe(cm.findAggregation(Model).additionalStages('start', [
       { $lookup: {
           from: 'users',
           localField: 'user',
